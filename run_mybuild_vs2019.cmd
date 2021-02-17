@@ -1,0 +1,1 @@
+mybuild_vs2019.cmd > mybuild_vs2019.log
