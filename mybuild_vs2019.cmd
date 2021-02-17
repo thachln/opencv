@@ -13,7 +13,7 @@ set "generator=Visual Studio 16 2019"
 set CUDA_ARCH_PTX=6.1
 
 REM https://sourceforge.net/projects/openblas/files/v0.3.13/
-set "OPEN_BLAS=D:/DevNow/OpenBLAS 0.3.13/xianyi-OpenBLAS-d2b11c4"
+set "OPEN_BLAS=D:/DevNow/xianyi-OpenBLAS-d2b11c4"
 
 REM https://github.com/Reference-LAPACK/lapack/archive/v3.9.0.tar.gz
 set "LAPACK=D:/DevNow/lapack-3.9.0"
@@ -35,13 +35,15 @@ if exist "%openCvBuild%" (
 
 REM Check folder path of cmake.exe is in environment variable PATH
 REM Don't use cmake in C:/Users/ThachLN/anaconda3/Library/share/cmake-3.19
-D:\RunNow\cmake-3.19.4-win64-x64\bin\cmake.exe -B"%openCvBuild%/" -H"%openCvSource%/" -G"%generator%" -DCMAKE_BUILD_TYPE=%buildType% -DOPENCV_EXTRA_MODULES_PATH="%openCVExtraModules%/" ^
+D:\RunNow\cmake-3.19.4-win64-x64\bin\cmake.exe -B"%openCvBuild%/" -Ax64 -H"%openCvSource%/" -G"%generator%" -DCMAKE_BUILD_TYPE=%buildType% -DOPENCV_EXTRA_MODULES_PATH="%openCVExtraModules%/" ^
 -DWITH_LAPACK=ON ^
 -DINSTALL_TESTS=OFF -DINSTALL_C_EXAMPLES=OFF -DBUILD_EXAMPLES=OFF ^
 -DBUILD_opencv_world=ON ^
 -DWITH_CUDA=ON -DCUDA_TOOLKIT_ROOT_DIR="%CUDA_PATH%" -DCUDA_FAST_MATH=ON -DWITH_CUBLAS=ON -DCUDA_ARCH_PTX=%CUDA_ARCH_PTX% -DWITH_NVCUVID=ON ^
 -DWITH_CUDNN=ON
 
-REM -DWITH_IPP=OFF ^
+REM Run msbuild
+cd %openCvBuild%
+"C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe" INSTALL.vcxproj /p:Configuration=Release /p:Platform=x64 /p:VisualStudioVersion=16.0 -m:%NUMBER_OF_PROCESSORS% -t:Clean -lowPriority:False
 
 @PAUSE
