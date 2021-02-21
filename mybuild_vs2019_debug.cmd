@@ -1,13 +1,13 @@
 REM @ECHO OFF
+set "buildType=Debug"
 set "openCvSource=%CD%"
 
 cd ..
 set "openCVExtraModules=%CD%\opencv_contrib\modules"
-set "openCvBuild=%CD%\build_vs2019_debug"
-set "outputFolder=%CD%\build_vs2019_bin_debug"
+set "openCvBuild=%CD%\build_vs2019_%buildType%"
+set "outputFolder=%CD%\opencv451_vs2019_bin_%buildType%"
 
 cd %openCvSource%
-set "buildType=Debug"
 REM set "generator=MinGW Makefiles"
 set "generator=Visual Studio 16 2019"
 
@@ -52,14 +52,13 @@ REM Don't use cmake in %ANACONDA%/Library/share/cmake-3.19
 D:\RunNow\cmake-3.19.4-win64-x64\bin\cmake.exe -B"%openCvBuild%/" -Ax64 -H"%openCvSource%/" -G"%generator%" -DCMAKE_BUILD_TYPE=%buildType% -DOPENCV_EXTRA_MODULES_PATH="%openCVExtraModules%/" ^
 -DWITH_LAPACK=ON ^
 -DINSTALL_TESTS=OFF -DINSTALL_C_EXAMPLES=OFF -DBUILD_EXAMPLES=OFF ^
--DBUILD_opencv_world=OFF ^
+-DBUILD_opencv_world=OFF -DINSTALL_CREATE_DISTRIB=ON ^
 -DWITH_CUDA=ON -DCUDA_TOOLKIT_ROOT_DIR="%CUDA_PATH%" -DCUDA_FAST_MATH=ON -DWITH_CUBLAS=ON -DCUDA_ARCH_PTX=%CUDA_ARCH_PTX% -DWITH_NVCUVID=ON ^
 -DWITH_CUDNN=ON ^
 -DWITH_GSTREAMER=ON ^
 -DWITH_MSMF=ON -DWITH_VFW=ON ^
 -DBUILD_WITH_DEBUG_INFO=ON ^
 -DBUILD_SHARED_LIBS=ON ^
--DINSTALL_CREATE_DISTRIB=ON ^
 -DLAPACK_LIBRARIES=D:/DevNow/lapack-3.7.0/lib/LAPACKd.lib ^
 -DCMAKE_INSTALL_PREFIX=%outputFolder%
 
